@@ -10,9 +10,8 @@
 ### Fonctionalité et prise en main
 La plateforme fournit les fonctionnalité comme :
 
-    - le multilangue.
-    - l'authentification
-    - la géolocalisation du client
+    - un système de commentaire.
+    - la liste des articles récement plubié
 
 Installation et exécution du projet
 -----------------------------------
