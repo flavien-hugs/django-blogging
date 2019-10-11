@@ -1,0 +1,57 @@
+{% load static blog_tags %}
+{% block content %}
+    <h3>{{ post.title }}</h3>
+    {% if post.tags.all %}
+        <p>Tags: {{ post.tags.all|join:", " }}</p>
+    {% endif %}
+
+    <small>
+        {{ post.publish }} by {{ post.author }}
+    </small>
+
+    <p>{{ post.body|markdown }}</p>
+
+    {% with comments.count as total_comments %}
+        <span>{{ total_comments }} comment{{ total_comments|pluralize }}</span>
+    {% endwith %}
+
+    {% for comment in comments %}
+        <div>
+            <p>
+                Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created }}
+            </p>
+            {{ comment.body|linebreaks }}
+        </div>
+    {% empty %}
+        <p>There are no comments yet.</p>
+    {% endfor %}
+
+    {% if new_comment %}
+        <h4>Your comment has been added.</h4>
+    {% else %}
+        <h4>Add a new comment</h4>
+        <form action="." method="post">
+            {{ form_comment.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" name="" value="add comment"></p>
+        </form>
+    {% endif %}
+
+    <p>
+        <a href="{% url "blog:post_share" post.id %}" title="">share this post</a>
+    </p>
+
+    {% if similar_posts %}
+        <p>
+            <h3>Similar posts</h3>
+            <p>
+                {% for post in similar_posts %}
+                    <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a>
+                {% empty %}
+                    there are no similar post yet.
+                {% endfor %}
+            </p>
+        </p>
+    {% endif %}
+
+{% endblock content %}

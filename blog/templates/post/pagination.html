@@ -1,0 +1,16 @@
+{% load static blog_tags %}
+<div class="pagination">
+    <span>
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}" class="">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}" title="">Next</a>
+        {% endif %}
+    </span>
+</div>
