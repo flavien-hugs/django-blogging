@@ -1,4 +1,4 @@
-
 Supprimerait .idea/sonarlint/
 .idea
-Supprimerait blog/
+Supprimerait blog
+staticfiles
