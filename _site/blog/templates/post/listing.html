@@ -1,0 +1,144 @@
+    {% extends "base.html" %}
+    {% load static blog_tags %}
+
+    {% block featured_post_area %}
+        <div class="featured-post-area">
+            <div class="container">
+                <div class="row">
+                    {% show_latest_posts 2 %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <!-- Single Featured Post -->
+                        {% include "_includes/sidebar.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock featured_post_area %}
+
+    {% block popular_news_area %}
+        <div class="popular-news-area section-padding-80-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="section-heading">
+                            <h6>Popular News</h6>
+                        </div>
+
+                        <div class="row">
+                            <!-- Single Post -->
+                            {% for post in posts %}
+                                <div class="col-12 col-md-6">
+                                    <div class="single-blog-post style-3">
+                                        <div class="post-thumb">
+                                            <a href="{{ post.get_absolute_url }}">
+                                                <img src="{% static "img/bg-img/12.jpg" %}" alt=""></a>
+                                        </div>
+                                        <div class="post-data">
+                                            {% if tags %}
+                                                <a class="post-catagory" href="{% url "blog:post_listing_by_tag" tag.slug %}">
+                                                    {{ tag.name }}
+                                                </a>
+                                            {% endif %}
+
+                                            <a href="{{ post.get_absolute_url }}" title="{{ post.title }}" class="post-title">
+                                                <h6>{{ post.title }}</h6>
+                                            </a>
+                                            <div class="post-meta d-flex align-items-center">
+                                                <a href="#" class="post-like">
+                                                    <img src="{% static "img/core-img/like.png" %}" alt=""> <span>392</span></a>
+                                                <a href="#" class="post-comment"><img src="{% static "img/core-img/chat.png" %}" alt=""> <span>10</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        <div class="section-heading">
+                            <h6>Info</h6>
+                        </div>
+                        <!-- Popular News Widget -->
+                        {% include "post/most_popular_post.html" %}
+
+                        <!-- Newsletter Widget -->
+                        <div class="newsletter-widget">
+                            <h4>Newsletter</h4>
+                            <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                            <form action="#" method="post">
+                                <input type="text" name="text" placeholder="Name">
+                                <input type="email" name="email" placeholder="Email">
+                                <button type="submit" class="btn w-100">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock popular_news_area %}
+
+
+    {% block editorial_post_area %}
+        <div class="editors-pick-post-area section-padding-80-50">
+            <div class="container">
+                <div class="row">
+                    <!-- Editors Pick -->
+                    <div class="col-12 col-md-7 col-lg-9">
+                        <div class="section-heading">
+                            <h6>Editor’s Pick</h6>
+                        </div>
+
+                        <div class="row">
+                            {% for post in posts %}
+                                <!-- Single Post -->
+                                <div class="col-12 col-lg-4">
+                                    <div class="single-blog-post">
+                                        <div class="post-thumb">
+                                            <a href="{{ post.get_absolute_url }}">
+                                                <img src="{% static "img/bg-img/2.jpg" %}" alt="{{ post.title }}">
+                                            </a>
+                                        </div>
+                                        <div class="post-data">
+                                            <a href="{{ post.get_absolute_url }}" class="post-title">
+                                                <h6>{{ post.title }}</h6>
+                                            </a>
+                                            <div class="post-meta">
+                                                <div class="post-date"><a>{{ post.publish }}</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- World News -->
+                    <div class="col-12 col-md-5 col-lg-3">
+                        <div class="section-heading">
+                            <h6>World News</h6>
+                        </div>
+
+                        <!-- Single Post -->
+                        {% for post in posts %}
+                            <div class="single-blog-post style-2">
+                                <div class="post-thumb">
+                                    <a href="{{ post.get_absolute_url }}">
+                                        <img src="{% static "img/bg-img/7.jpg" %}" alt="{{ post.title }}">
+                                    </a>
+                                </div>
+                                <div class="post-data">
+                                    <a href="{{ post.get_absolute_url }}" class="post-title">
+                                        <h6>{{ post.title }}</h6>
+                                    </a>
+                                    <div class="post-meta">
+                                        <div class="post-date"><a>{{ post.publish }}</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock editorial_post_area %}

@@ -6,7 +6,7 @@
     </div>
     <div id="breakingNewsTicker" class="ticker">
         <ul>
-            {% for post in latest_posts %}
+            {% for post in posts %}
                 <li>
                     <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">
                         {{ post.title }}
@@ -23,7 +23,7 @@
     </div>
     <div id="internationalTicker" class="ticker">
         <ul>
-            {% for post in latest_posts %}
+            {% for post in posts %}
                 <li>
                     <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">
                         {{ post.title }}
