@@ -1,0 +1,63 @@
+{% load static %}
+<!-- Comment Area Start -->
+
+    <div class="comment_area clearfix">
+        <h5 class="title">
+            {% with comments.count as total_comments %}
+                {{ total_comments }} Comment{{ total_comments|pluralize }}</h5>
+            {% endwith %}
+        <ol>
+            {% for comment in comments %}
+                <!-- Single Comment Area -->
+                <li class="single_comment_area">
+                    <!-- Comment Content -->
+                    <div class="comment-content d-flex">
+                        <!-- Comment Author -->
+                        <div class="comment-author">
+                            <img src="{% static "img/bg-img/30.jpg" %}" alt="{{ comment.name }}">
+                        </div>
+                        <!-- Comment Meta -->
+                        <div class="comment-meta">
+                            <a class="post-author">{{ comment.name }}</a>
+                            <a class="post-date">{{ comment.created }}</a>
+                            <p>{{ comment.body|linebreaks }}</p>
+                        </div>
+                    </div>
+                </li>
+            {% empty %}
+                <p>There are no comments yet.</p>
+            {% endfor %}
+        </ol>
+    </div>
+
+
+    <div class="post-a-comment-area section-padding-80-0">
+        <h4>Leave a comment</h4>
+        <!-- Reply Form -->
+        {% if new_comment %}
+            <span>Your comment has been added.</span>
+        {% else %}
+            <div class="contact-form-area">
+                <form action="." method="post">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            {{ form_comment.name }}
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            {{ form_comment.email }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_comment.body }}
+                        </div>
+                        {% csrf_token %}
+                        <div class="col-12 text-center">
+                            <button class="btn newspaper-btn mt-30 w-100" type="submit">Submit Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+

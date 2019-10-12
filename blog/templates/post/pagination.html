@@ -1,16 +1,17 @@
 {% load static blog_tags %}
-<div class="pagination">
-    <span>
-        {% if page.has_previous %}
-            <a href="?page={{ page.previous_page_number }}" class="">Previous</a>
-        {% endif %}
 
-        <span class="current">
-            Page {{ page.number }} of {{ page.paginator.num_pages }}
-        </span>
+<div class="pager d-flex align-items-center justify-content-between">
+    {% if page.has_previous %}
+        <div class="prev">
+            <a href="?page={{ page.previous_page_number }}" class="active">
+                <i class="fa fa-angle-left"></i> previous
+            </a>
+        </div>
+    {% endif %}
 
-        {% if page.has_next %}
-            <a href="?page={{ page.next_page_number }}" title="">Next</a>
-        {% endif %}
-    </span>
+    {% if page.has_next %}
+        <div class="next">
+            <a href="?page={{ page.next_page_number }}">Next <i class="fa fa-angle-right"></i></a>
+        </div>
+    {% endif %}
 </div>

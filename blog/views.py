@@ -27,7 +27,7 @@ def post_listing(request, tag_slug=None):
         tag = get_object_or_404(Tag, slug=tag_slug)
         object_list = object_list.filter(tags__in=[tag])
 
-    paginator = Paginator(object_list, 3)
+    paginator = Paginator(object_list, 10)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -112,6 +112,7 @@ def post_search(request):
             results = Post.objects.annotate(
                 similarity=TrigramSimilarity('title', query),
             ).filter(similarity__gt=0.3).order_by('similarity')
+
 
     context = { 'form': form, 'query': query, 'results': results }
     template = 'post/search.html'

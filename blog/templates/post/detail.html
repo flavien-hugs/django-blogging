@@ -1,57 +1,128 @@
+{% extends "base.html" %}
 {% load static blog_tags %}
-{% block content %}
-    <h3>{{ post.title }}</h3>
-    {% if post.tags.all %}
-        <p>Tags: {{ post.tags.all|join:", " }}</p>
-    {% endif %}
 
-    <small>
-        {{ post.publish }} by {{ post.author }}
-    </small>
+    {% block hero_area %}{% endblock hero_area %}
+    <!-- include article-post-area here -->
+    {% block featured_post_area %}
+        <div class="blog-area section-padding-0-80 mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="blog-posts-area">
+                            <!-- Single Featured Post -->
+                            <div class="single-blog-post featured-post single-post">
+                                <div class="post-thumb">
+                                    <a href="{{ post.get_absolute_url }}">
+                                        <img src="{% static "img/bg-img/28.jpg" %}" alt="{{ post.title }}">
+                                    </a>
+                                </div>
 
-    <p>{{ post.body|markdown }}</p>
+                                <div class="post-data">
+                                    <a href="#" title="" class="post-category">Finance</a>
+                                    <a href="{{ post.get_absolute_url }}" title="{{ post.title }}" class="post-title">
+                                        <h6>{{ post.title }}</h6>
+                                    </a>
 
-    {% with comments.count as total_comments %}
-        <span>{{ total_comments }} comment{{ total_comments|pluralize }}</span>
-    {% endwith %}
+                                    <div class="post-meta">
+                                        <p class="post-author">Publish by {{ post.author }} at <a>{{ post.publish }}</a></p>
+                                        <p>{{ post.body }}</p>
 
-    {% for comment in comments %}
-        <div>
-            <p>
-                Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created }}
-            </p>
-            {{ comment.body|linebreaks }}
+                                        <div class="newspaper-post-like d-flex align-items-center justify-content-between">
+                                            <!-- our tags in post -->
+                                            <div class="newspaper-tags d-flex">
+                                                <span>Tags:</span>
+                                                <ul class="d-flex">
+                                                    {% if post.tags.all %}
+                                                        {% for tag in post.tags.all %}
+                                                            <li><a href="{% url "blog:post_listing_by_tag" tag.slug %}">
+                                                                {{ tag.name }}
+                                                                {% if not forloop.last %}, {% endif %}
+                                                            </a></li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+
+                                            <!-- Post Like & Post Comment -->
+                                            <div class="d-flex align-items-center post-like--comments">
+                                                <a href="#" class="post-like">
+                                                    <img src="{% static "img/core-img/like.png" %}">
+                                                    <span>392</span>
+                                                </a>
+                                                <a class="post-comment">
+                                                    <img src="{% static "img/core-img/chat.png" %}">
+                                                    <span>{{ comments.count }}</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% include "post/pagination.html" %}
+
+                            {% if similar_posts %}
+                                <div class="section-heading">
+                                    <h6>Similar posts</h6>
+                                </div>
+                                <div class="row">
+                                    <!-- Single Post -->
+                                    {% for post in similar_posts %}
+                                        <div class="col-12 col-md-6">
+                                            <div class="single-blog-post style-3 mb-80">
+                                                <div class="post-thumb">
+                                                    <a href="{{ post.get_absolute_url }}">
+                                                        <img src="{% static "img/bg-img/12.jpg" %}" alt="{{ post.title }}">
+                                                    </a>
+                                                </div>
+                                                <div class="post-data">
+                                                    <a href="#" class="post-catagory">Finance</a>
+                                                    <a href="{{ post.get_absolute_url }}" class="post-title">
+                                                        <h6>{{ post.title }}</h6>
+                                                    </a>
+                                                    <div class="post-meta d-flex align-items-center">
+                                                        <a class="post-like">
+                                                            <img src="{% static "img/core-img/like.png" %}" alt="">
+                                                            <span>392</span></a>
+                                                        <a class="post-comment">
+                                                            <img src="{% static "img/core-img/chat.png" %}">
+                                                            <span>{{ comments.count }}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        there are no similar post yet.
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Comment Area Start -->
+                            {% include "post/comments.html" %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="blog-sidebar-area">
+
+                            <!-- Popular News Widget -->
+                            {% include "post/most_popular_post.html" %}
+
+                            <!-- Newsletter Widget -->
+                            <div class="newsletter-widget mb-50">
+                                <h4>Newsletter</h4>
+                                <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                                <form action="#" method="post">
+                                    <input type="text" name="text" placeholder="Name">
+                                    <input type="email" name="email" placeholder="Email">
+                                    <button type="submit" class="btn w-100">Subscribe</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% empty %}
-        <p>There are no comments yet.</p>
-    {% endfor %}
+    {% endblock featured_post_area %}
 
-    {% if new_comment %}
-        <h4>Your comment has been added.</h4>
-    {% else %}
-        <h4>Add a new comment</h4>
-        <form action="." method="post">
-            {{ form_comment.as_p }}
-            {% csrf_token %}
-            <p><input type="submit" name="" value="add comment"></p>
-        </form>
-    {% endif %}
 
-    <p>
-        <a href="{% url "blog:post_share" post.id %}" title="">share this post</a>
-    </p>
-
-    {% if similar_posts %}
-        <p>
-            <h3>Similar posts</h3>
-            <p>
-                {% for post in similar_posts %}
-                    <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a>
-                {% empty %}
-                    there are no similar post yet.
-                {% endfor %}
-            </p>
-        </p>
-    {% endif %}
-
-{% endblock content %}
