@@ -1,4 +1,4 @@
-# [django-blogging](https://github.com/flavien-hugs/django-blogging)&nbsp;
+# [django-blogging](https://github.com/flavien-hugs/django-blogging)
 ## un simple moteur de blog fait avec le framework Django
 ------------------------------------------
 
@@ -6,7 +6,7 @@
 Cette création est mise à disposition sous un contrat Creative Commons.
 Voir le fichier licence.txt ci-joint.
 
-Ce blog a été développé et testé avec python 3.6 (http://www.python.org)
+Ce blog a été développé et testé avec [python 3.6](http://www.python.org)
 et [Django 2.2](http://www.djangoproject.com) version LTS.
 
 ![django-blogging](https://github.com/flavien-hugs/django-blogging/blob/master/screenshot.png "screenshot description")
@@ -25,28 +25,23 @@ Installation et exécution du projet
 -----------------------------------
 
 ### Dépendances
-* [pip](https://github.com/pypa/pip/)
-* [virtualenv](https://pypi.python.org/pypi/virtualenv/)
-* [Python](https://www.python.org/) >=2.6
-* [Django](https://docs.djangoproject.com/) >=2
-* [Bootstrap4](https://getbootstrap.com/)
+Les bibliothèques Python additionnelles nécessaires à son fonctionnement
+sont [Python-Markdown](http://pythonhosted.org/Markdown/) et [Pillow](https://python-pillow.org/).
+La liste complète des dépendances se trouve dans le fichier **requirements.txt**.
 
 
 ### 1. Installation
-Exécutez les commandes suivantes :
 
-    - git clone https://github.com/flavien-hugs/django-ecommerce/
-    - cd django-blogging
-    - source venv/bin/activate ou . ven/bin/activate
-    - pip install -r requirements.txt
-    - python manage.py makemigrations ou ./manage.py makemigrations
-    - python manage.py migrate ou ./manage.py migrate
-
-### 2. Démarrer le serveur
-
-    - python manage.py runserver ou ./manage.py runserver
-
-Puis naviguer jusqu'à <http://localhost:8000>
+    - Commencez par installer le package 'python-3.x' pour votre OS.
+    - Créez ensuite un environnement virtuel dans le répertoire de votre choix:
+        -- python3.6 -m venv venv
+    - Activez-le :
+        -- source venv/bin/activate ou . venv/bin/activate
+    - Installer ensuite les dépendances nécessaires :
+        -- pip install -r blogging/requirements.txt
+    - Enfin on lance le serveur web de développement:
+        -- python manage.py runserver ou ./manage.py runserver
+        -- puis naviguer jusqu'à <http://localhost:8000>
 
 
 Comment contribuer
