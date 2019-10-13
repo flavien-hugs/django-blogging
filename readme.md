@@ -1,6 +1,5 @@
 # [django-blogging](https://github.com/flavien-hugs/django-blogging)
-## un simple moteur de blog fait avec le framework Django
-------------------------------------------
+un simple moteur de blog fait avec le framework Django
 
 ![[django-blogging](https://github.com/flavien-hugs/django-blogging/)](https://img.shields.io/badge/unsta-live--demo-orange.svg?style=flat)
 ![The MIT License](http://img.shields.io/badge/License-MIT-green.svg?style=flat)
