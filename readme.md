@@ -1,11 +1,19 @@
 # [django-blogging](https://github.com/flavien-hugs/django-blogging)&nbsp;
+## un simple moteur de blog fait avec le framework Django
+------------------------------------------
+
+*2019 - Flavien HUGS - CC-BY-NC-SA*
+Cette création est mise à disposition sous un contrat Creative Commons.
+Voir le fichier licence.txt ci-joint.
+
+Ce blog a été développé et testé avec python 3.6 (http://www.python.org)
+et [Django 2.2](http://www.djangoproject.com) version LTS.
 
 ![django-blogging](https://github.com/flavien-hugs/django-blogging/blob/master/screenshot.png "screenshot description")
 
 ![[django-blogging](https://github.com/flavien-hugs/django-blogging/)](https://img.shields.io/badge/unsta-live--demo-orange.svg?style=flat)
 ![The MIT License](http://img.shields.io/badge/License-MIT-green.svg?style=flat)
 
-[django-blogging](https://github.com/flavien-hugs/django-blogging/) un site ecommerce inspiré de quelque peu du design de jumia, basé sur le framework django et bootstrap.
 
 ### Fonctionalité et prise en main
 La plateforme fournit les fonctionnalité comme :
@@ -52,4 +60,4 @@ La principale branche de travail est [django-blogging/master](https://github.com
 Credits
 ------------
 
-Code and Design: [flavien-hugs](https://twitter.com/flavien_hugs)
+Code: [flavien-hugs](https://twitter.com/flavien_hugs)
