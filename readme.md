@@ -34,23 +34,25 @@ La liste complète des dépendances se trouve dans le fichier **requirements.txt
 
     - Commencez par installer le package 'python-3.x' pour votre OS.
     - Créez ensuite un environnement virtuel dans le répertoire de votre choix:
-        -- python3.6 -m venv venv
+        **python3.6 -m venv venv
     - Activez-le :
-        -- source venv/bin/activate ou . venv/bin/activate
+        **source venv/bin/activate ou . venv/bin/activate
     - Installer ensuite les dépendances nécessaires :
-        -- pip install -r blogging/requirements.txt
+        **pip install -r blogging/requirements.txt
     - Enfin on lance le serveur web de développement:
-        -- python manage.py runserver ou ./manage.py runserver
-        -- puis naviguer jusqu'à <http://localhost:8000>
+        **python manage.py runserver ou ./manage.py runserver
+        **puis naviguer jusqu'à <http://localhost:8000>
 
 
-Comment contribuer
-------------------
+Notes pour le passage en production:
+------------------------------------
+Il faudra en plus déployer les fichiers statiques
 
-Faites un Fork et travaillez sur votre propre branche, soumettez des pull requests.
+    **python manage.py collectstatic
 
-La principale branche de travail est [django-blogging/master](https://github.com/flavien-hugs/django-blogging/tree/master). La branche de production est [django-blogging/master](https://github.com/flavien-hugs/django-blogging/tree/prod).
-
+Vous pouvez ensuite utiliser un serveur WSGI HTTP tel que Gunicorn
+pour servir votre application Django, ainsi qu'un SGBDR évolué
+comme PostgreSQL ou MariaDB.
 
 Credits
 ------------
