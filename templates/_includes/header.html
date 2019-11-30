@@ -2,62 +2,86 @@
         {% static "img/core-img/logo.png" as logo %}
         {% static "img/bg-img/23.jpg" as 23 %}
 
+        <!-- liste des regions -->
+        <div class="container-fluid">
+            <div class="row d-flex align-items-center text-center">
+                <div class="col-12">
+                    <div class="d-none d-lg-inline-block">
+                        {% for r in region %}
+                            <a href="/" title="{{ r|upper }}" class="small font-weight-bold text-muted">{{ r|upper }}</a>
+                            {% if not forloop.last %}&smid;{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div><!-- ./liste des regions -->
 
-        <!-- ###################################################################### -->
-        <!-- header -->
+        <!-- top header -->
         <header class="header-area">
-            <!-- Top Header Area -->
             <div class="top-header-area">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="top-header-content d-flex align-items-center justify-content-between">
-                                <!-- Logo -->
-                                <div class="logo">
-                                    <a href="index.html"><img src="{{ logo }}" alt=""></a>
+                    <div class="row align-items-center">
+                        <!-- flash info -->
+                        <div class="col-12 col-md-6">
+                            {% include "_includes/breaking.html" %}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="top-meta-data d-flex align-items-center justify-content-end">
+                                <!-- social link -->
+                                <div class="top-social-info">
+                                    <a href="#" title="Suivez-nous sur facebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" title="Suivez-nous sur Twitter">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a href="#" title="Suivez-nous sur youtube">
+                                        <i class="fa fa-youtube-play"></i>
+                                    </a>
                                 </div>
 
-                                <!-- Login Search Area -->
-                                <div class="login-search-area d-flex align-items-center">
-                                    <!-- Login -->
-                                    <div class="login d-flex">
-                                        <a href="#">Login</a>
-                                        <a href="#">Register</a>
-                                    </div>
-                                    <!-- Search Form -->
-                                    <div class="search-form">
-                                        <form action="." method="get">
-                                            <input type="search" name="search" class="form-control" placeholder="Search">
-                                            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        </form>
-                                    </div>
+                                <!-- barre de recherche -->
+                                <div class="top-search-area">
+                                    <form role="search" action="{% url "blog:search" %}" method="get">
+                                        {% csrf_token %}
+                                        <input type="search" name="q" id="topSearch" placeholder="Search...">
+                                        <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </form>
                                 </div>
+
+                                <!-- Login -->
+                                <a href="#" class="login-btn">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </a>
+
+                                <a href="#" class="login-btn">
+                                    <i class="fa fa-support" aria-hidden="true"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Navbar Area -->
-            <div class="newspaper-main-menu" id="stickyMenu">
+            <!-- navigation -->
+            <div class="vizew-main-menu" id="sticker">
                 <div class="classy-nav-container breakpoint-off">
                     <div class="container">
-                        <!-- Menu -->
-                        <nav class="classy-navbar justify-content-between" id="newspaperNav">
+                        <nav class="classy-navbar justify-content-between" id="vizewNav">
 
-                            <!-- Logo -->
-                            <div class="logo">
-                                <a href="index.html"><img src="{{ logo }}" alt=""></a>
+                            <!-- navbar brand -->
+                            <div class="nav-brand">
+                                <a href="/"><img src="{{ logo }}" alt="{{ site_name }}"></a>
                             </div>
 
-                            <!-- Navbar Toggler -->
+                            <!-- navbar Toggler -->
                             <div class="classy-navbar-toggler">
                                 <span class="navbarToggler"><span></span><span></span><span></span></span>
                             </div>
 
                             <!-- Menu -->
                             <div class="classy-menu">
-
                                 <!-- close btn -->
                                 <div class="classycloseIcon">
                                     <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
@@ -66,58 +90,25 @@
                                 <!-- Nav Start -->
                                 <div class="classynav">
                                     <ul>
-                                        <li class="active"><a href="index.html">Home</a></li>
-                                        <li><a href="#">Mega Menu</a>
-                                            <div class="megamenu">
-                                                <ul class="single-mega cn-col-4">
-                                                    <li class="title">Catagories</li>
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="catagories-post.html">Catagories</a></li>
-                                                    <li><a href="single-post.html">Single Articles</a></li>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                                <ul class="single-mega cn-col-4">
-                                                    <li class="title">Catagories</li>
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="catagories-post.html">Catagories</a></li>
-                                                    <li><a href="single-post.html">Single Articles</a></li>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                                <ul class="single-mega cn-col-4">
-                                                    <li class="title">Catagories</li>
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="catagories-post.html">Catagories</a></li>
-                                                    <li><a href="single-post.html">Single Articles</a></li>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                                <ul class="single-mega cn-col-4">
-                                                    <li class="title">Catagories</li>
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="catagories-post.html">Catagories</a></li>
-                                                    <li><a href="single-post.html">Single Articles</a></li>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li><a href="#">Politics</a></li>
-                                        <li><a href="#">Breaking News</a></li>
-                                        <li><a href="#">Business</a></li>
-                                        <li><a href="#">Technology</a></li>
-                                        <li><a href="#">Health</a></li>
-                                        <li><a href="#">Travel</a></li>
+                                        <li><a href="/">à la une </a></li>
+                                        <li><a href="#">Politique</a></li>
+                                        <li><a href="#">Economie &amp; Business</a></li>
+                                        <li><a href="#">Société &amp; Culture</a></li>
                                         <li><a href="#">Sports</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="#">Dossiers</a>
+                                            <ul class="dropdown">
+                                                <li><a href="#">Technologies</a></li>
+                                                <li><a href="">Portrait</a></li>
+                                                <li><a href="">Enquête</a></li>
+                                                <li><a href="">Interview</a></li>
+                                                <li><a href="">Contact</a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
-                                </div>
-                                <!-- Nav End -->
+                                </div><!-- Nav End -->
                             </div>
                         </nav>
                     </div>
                 </div>
-            </div>
-        </header>
-        <!-- /header -->
+            </div><!-- ./navigation -->
+        </header><!-- ./header -->

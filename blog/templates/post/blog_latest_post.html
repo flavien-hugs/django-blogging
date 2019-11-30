@@ -1,0 +1,79 @@
+{% load static blog_tags i18n %}
+
+<section class="hero--area p-2">
+    <div class="container">
+        <div class="row no-gutters">
+            {% for post in latest_posts %}
+                {% if forloop.first %}
+                    <div class="col-12 col-md-7 col-lg-8">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="post-1" role="tabpanel" aria-labelledby="post-1-tab">
+                                <!-- single feature post -->
+                                <div class="single-feature-post video-post bg-img"
+                                style="background-image: url({% if post.image %}{{ post.image.url }}{% endif %});">
+                                    <!-- post content -->
+                                    <div class="post-content">
+                                        {% for cat in post.categories.all %}
+                                            <a class="post-cata" href="{{ cat.get_absolute_url }}">{{ cat.name|upper|safe }}</a>
+                                            {% if not forloop.last %} {% endif %}
+                                        {% endfor %}
+                                        <a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title|safe|truncatewords:8 }}</a>
+
+                                        <div class="post-meta d-flex">
+                                            <a><i class="fa fa-calendar-o mr-1"></i>
+                                                {{ post.publish|date }}
+                                            </a>
+                                            <a><i class="fa fa-user-o mr-1"></i>
+                                                {{ post.author|safe }}
+                                            </a>
+                                            <a><i class="fa fa-eye mr-1" aria-hidden="true"></i>{{ post.pageviews }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div class="col-12 col-md-5 col-lg-4">
+                <ul class="nav vizew-nav-tab d-none d-md-inline-block" role="tablist">
+                    {% for post in latest_posts  %}
+                        {% if not forloop.first %}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill"
+                                href="{{ post.get_absolute_url }}" role="tab" aria-controls="post-1" aria-selected="true">
+                                    <!-- single blog post -->
+                                    <div class="single-blog-post style-2 d-flex align-items-center">
+                                        <div class="post-content">
+                                            <h6 class="post-title">
+                                                {{ post.title|safe}}
+                                            </h6>
+                                            <div class="post-meta d-flex justify-content-between">
+                                                <span>
+                                                    <i class="fa fa-calendar-o" aria-hidden="true"></i> {{ post.publish|date }}
+                                                </span>
+
+                                                <span>
+                                                    <i class="fa fa-user" aria-hidden="true">
+                                                    </i> {{ post.author|safe }}
+                                                </span>
+
+                                                <span>
+                                                    <i class="fa fa-eye" aria-hidden="true">
+                                                    </i> 11
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+

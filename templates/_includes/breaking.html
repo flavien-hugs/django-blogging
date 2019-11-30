@@ -1,32 +1,15 @@
-{% load static %}
+{% load i18n static %}
 
 <div class="breaking-news-area d-flex align-items-center">
     <div class="news-title">
-       <p> Breaking News</p>
+       <p>Flash info :</p>
     </div>
     <div id="breakingNewsTicker" class="ticker">
         <ul>
             {% for post in posts %}
                 <li>
                     <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">
-                        {{ post.title }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
-
-<div class="breaking-news-area d-flex align-items-center mt-15">
-    <div class="news-title title2">
-       <p> International </p>
-    </div>
-    <div id="internationalTicker" class="ticker">
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">
-                        {{ post.title }}
+                        {{ post.title|safe|truncatewords:6 }}
                     </a>
                 </li>
             {% endfor %}

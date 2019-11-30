@@ -1,0 +1,84 @@
+    {% extends "base.html" %}
+    {% load static blog_tags i18n %}
+
+    {% block hero_area %}{% endblock hero_area %}
+    <!-- include article-post-area here -->
+    {% block featured_post_area %}
+        <div class="blog-area section-padding-0-80 mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="blog-posts-area">
+                            <!-- Single Featured Post -->
+                            <div class="single-blog-post featured-post single-post">
+                                <div class="post-thumb">
+                                    <a href="{{ post.get_absolute_url }}">
+                                        {% if post.image %}
+                                            <img src="{{ post.image.url }}"alt="{{ post.title }}">
+                                        {% endif %}
+                                    </a>
+                                </div>
+
+                                <div class="post-data">
+                                    {% for cat in post.categories.all %}
+                                        <a class="post-catagory d-inline-block" href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">{{ cat.name }}</a>
+                                        {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                    <a href="{{ post.get_absolute_url }}" title="{{ post.title }}" class="post-title">
+                                        <h6>{{ post.title|safe }}</h6>
+                                    </a>
+
+                                    <div class="social-likes" data-url="{{ site_name }}{{ post.get_absolute_url }}" data-title="{{ site_name }}">
+                                        <div data-service="facebook" title="Partager sur Facebook">Facebook</div>
+                                        <div data-service="twitter" data-via="@{{ site_name }}" data-related="@{{ site_name }}" title="Share link on Twitter">Twitter</div>
+                                        <div data-service="plusone" title="Share link on Google+">Google+</div>
+                                    </div>
+
+                                    <div class="post-meta">
+                                        <p class="post-author">
+                                            Publié par {{ post.author }} le <a>{{ post.publish|date }} &smid; </a>
+                                        </p>
+
+                                        <p>{{ post.body|safe }}</p>
+
+                                        <div class="newspaper-post-like d-flex align-items-center justify-content-between">
+                                            <!-- Post Comment -->
+                                            <div class="d-flex align-items-center post-like--comments">
+                                                <a class="post-comment">
+                                                    <img src="{% static "img/core-img/chat.png" %}">
+                                                    <span>{% pageviews %}</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                           <!-- include similar post here -->
+                           {% include "post/blog_post_similar.html" %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="blog-sidebar-area">
+
+                            <!-- Popular News Widget -->
+                            {% include "post/most_popular_post.html" %}
+
+                            <!-- Newsletter Widget -->
+                            <div class="newsletter-widget mb-50">
+                                <h4>Newsletter</h4>
+                                <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                                <form action="#" method="post">
+                                    <input type="text" name="text" placeholder="Name">
+                                    <input type="email" name="email" placeholder="Email">
+                                    <button type="submit" class="btn w-100">Subscribe</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock featured_post_area %}
+
+

@@ -1,0 +1,27 @@
+{% load static blog_tags i18n %}
+
+{% if similar_posts %}
+    <div class="section-heading">
+        <h6>Articles similaires</h6>
+    </div>
+
+    <div class="row">
+        <!-- articles similaires -->
+        {% for post in similar_posts %}
+            <div class="col-12 col-md-4">
+                <div class="single-blog-post style-3 mb-3">
+                    <div class="post-data">
+                        {% for cat in post.categories.all %}
+                            <a class="post-catagory d-inline-block" href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">{{ cat.name }}</a>
+                            {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        <a href="{{ post.get_absolute_url }}" class="post-title">
+                            <h6>{{ post.title|truncatewords:6 }}</h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+                {% empty %}
+        {% endfor %}
+    </div>
+{% endif %}

@@ -1,0 +1,59 @@
+{% load static blog_tags i18n %}
+
+<!-- Section Heading -->
+<div class="section-heading style-2">
+    <h4>Latest News</h4>
+    <div class="line"></div>
+</div>
+
+<!-- Featured Post Slides -->
+<div class="featured-post-slides owl-carousel mb-3">
+    <!-- Single Feature Post -->
+    {% for post in posts %}
+        <div class="single-feature-post video-post bg-img" style="background-image: url({% if post.image %}{{ post.image.url }}{% endif %});">
+            <div class="post-content">
+                {% for cat in post.categories.all %}
+                    <a href="{{ cat.get_absolute_url }}" class="post-cata">{{ cat.name|upper|safe }}</a>
+                {% endfor %}
+                <a href="{{ post.get_absolute_url }}" class="post-title">
+                    {{ post.title|safe }}
+                </a>
+                <div class="post-meta d-flex">
+                    <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>{{ post.publish|date }}</a><a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>{{ post.author|safe }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Single Post Area -->
+{% for post in posts %}
+    <div class="single-post-area mb-3">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-6">
+                <!-- Post Thumbnail -->
+                <div class="post-thumbnail">
+                    <img src="{% if post.image %}
+                        {{ post.image.url }}{% endif %}" alt="{{ post.title }}">
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <!-- Post Content -->
+                <div class="post-content mt-0">
+                    {% for cat in post.categories.all %}
+                        <a href="{{ cat.get_absolute_url }}" class="post-cata cata-sm cata-success">{{ cat|upper|safe }}</a>
+                    {% endfor %}
+                    <a href="{{ post.get_absolute_url }}" class="post-title text-dark mb-2">
+                        {{ post.title|safe|truncatewords:8 }}
+                    </a>
+                    <div class="post-meta d-flex align-items-center mb-2">
+                        <a href="#" class="post-author">{{ post.author }}</a>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <a href="#" class="post-date">{{ post.publish|date }}</a>
+                    </div>
+                    <p class="mb-2">{{ post.title|safe }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

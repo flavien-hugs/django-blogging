@@ -16,6 +16,8 @@ et [Django 2.2](http://www.djangoproject.com) version LTS.
 La plateforme fournit les fonctionnalité comme :
 
     - un système de commentaire.
+    - moteur de recherche interne
+    - système de recommendations d'articles
     - la liste des articles récement plubié
 
 Installation et exécution du projet

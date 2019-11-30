@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Archives de {{ year }}{% endblock %}
+
+{% block content %}
+    <div class="object-list">
+        <ul>
+        {% for object in date_list %}
+            <li><a href="{% url blog:month_archive object|date:"Y",object|date:"m"|slugify %}">{{ object|date:"F" }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

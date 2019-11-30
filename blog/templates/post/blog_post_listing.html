@@ -1,0 +1,126 @@
+        {% extends "base.html" %}
+        {% load static blog_tags i18n %}
+
+        {% block hero_area %}
+            {% show_latest_posts 5 %}
+        {% endblock hero_area %}
+
+        {% block featured_post_area %}
+            <section class="trending-posts-area">
+                <div class="container">
+                    <div class="row">
+                        {% show_politique_posts %}
+                        {% show_economie_posts %}
+                        {% show_education_posts %}
+                    </div>
+                </div>
+            </section>
+        {% endblock featured_post_area %}
+
+        {% block popular_news_area %}
+            <section class="vizew-post-area my-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-7 col-lg-8">
+                            <div class="all-posts-area">
+                                <!-- listes de tous les articles -->
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="section-heading style-2">
+                                            <h4>Sport Videos</h4>
+                                            <div class="line"></div>
+                                        </div>
+
+                                        <div class="featured-post-slides owl-carousel mb-5">
+                                            {% for post in posts %}
+                                                <div class="single-feature-post video-post bg-img" style="background-image: url({% if post.image %}{{ post.image.url }}{% endif %});">
+                                                    <div class="post-content">
+                                                        {% for cat in post.categories.all %}
+                                                            <a href="{{ cat.get_absolute_url }}" class="post-cata">{{ cat.name|upper }}</a>
+                                                        {% endfor %}
+
+                                                        <a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title|safe|truncatewords:8 }}</a>
+                                                        <div class="post-meta d-flex">
+                                                            <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>{{ post.publish|date }}</a>
+                                                            <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>{{ post.author|safe }}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-6">
+                                        <!-- Section Heading -->
+                                        <div class="section-heading style-2">
+                                            <h4>Business Videos</h4>
+                                            <div class="line"></div>
+                                        </div>
+
+                                        <div class="featured-post-slides owl-carousel mb-5">
+                                            {% for post in posts %}
+                                                <div class="single-feature-post video-post bg-img" style="background-image: url({% if post.image %}{{ post.image.url }}{% endif %});">
+                                                    <div class="post-content">
+                                                        {% for cat in post.categories.all %}
+                                                            <a href="{{ cat.get_absolute_url }}" class="post-cata">{{ cat.name|upper }}</a>
+                                                        {% endfor %}
+
+                                                        <a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title|safe|truncatewords:8 }}</a>
+                                                        <div class="post-meta d-flex">
+                                                            <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>{{ post.publish|date }}</a>
+                                                            <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>{{ post.author|safe }}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <!-- single blog post -->
+                                    {% for post in posts %}
+                                        <div class="col-12 col-lg-6">
+                                            <div class="single-blog-post style-3 d-flex mb-50">
+                                                <div class="post-thumbnail">
+                                                    <img src="{% if post.image %}
+                                                    {{ post.image.url }}{% endif %}" alt="{{ post.url }}">
+                                                </div>
+                                                <div class="post-content">
+                                                    <a href="{{ post.get_absolute_url }}" class="post-title text-dark">{{ post.title|safe|truncatewords:5 }}</a>
+                                                    <div class="post-meta d-flex justify-content-between">
+                                                        <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>{{ post.publish|date }}</a>
+                                                        <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>{{ post.author|safe }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                {% include "post/blog_post_divers.html" %}
+                            </div>
+                        </div>
+
+                        {% include "_includes/sidebar.html" %}
+                    </div>
+                </div>
+            </section>
+        {% endblock popular_news_area %}
+
+        {% block editorial_post_area %}
+            <section class="trending-posts-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Section Heading -->
+                            <div class="section-heading">
+                                <h4 class="text-dark">Trending Videos</h4>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                        {% include "post/blog_post_video.html" %}
+                    </div>
+                </div>
+            </section>
+        {% endblock editorial_post_area %}

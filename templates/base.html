@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="no-js" lang="fr">
+<html lang="fr">
     <head>
-        {% load static i18n %}
+        {% load static blog_tags i18n %}
         <!-- meta header and css -->
-        {% block css %}{% include "_includes/css.html" %}{% endblock css %}
+        {% block css %}{% include "_includes/meta.html" %}{% endblock css %}
         <!-- ./meta header-->
         <!-- titre -->
         <title>
+            {{ site_name }} &smid;
             {% block title %}
                 {% if page_title %}
-                    {{ page_title }} |
+                    {{ page_title }}
+                {% else %}
+                    {{ meta_description|truncatewords:5 }}
                 {% endif %}
-                {{ site_name }}
             {% endblock title %}
         </title>
         <!-- ./titre -->
@@ -25,26 +27,6 @@
         {% block content %}
             <!-- include content here -->
             {% block hero_area %}
-                <div class="hero-area">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-12 col-lg-8">
-                                <!-- breaking News Widget -->
-                                    {% include "_includes/breaking.html" %}
-                                <!-- breaking News Widget -->
-                            </div>
-
-                            <!-- Hero Add -->
-                            <div class="col-12 col-lg-4">
-                                <div class="hero-add">
-                                    <a href="#">
-                                        <img src="{% static "img/bg-img/hero-add.gif" %}" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             {% endblock hero_area %}
             <!-- end include hero-area here -->
 
@@ -62,10 +44,10 @@
             {% block editorial_post_area %}
             {% endblock editorial_post_area %}
             <!-- end include Editorial Post Area here -->
-        {% endblock content %}
 
-        <!-- include footer here -->
-        {% include "_includes/footer.html" %}
+            <!-- include footer here -->
+            {% include "_includes/footer.html" %}
+        {% endblock content %}
         <!-- include script here -->
         {% include "_includes/scripts.html" %}
     </body>

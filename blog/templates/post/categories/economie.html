@@ -1,0 +1,32 @@
+{% load static blog_tags i18n %}
+
+<!-- single blog post -->
+{% for post in economie %}
+    <div class="col-12 col-md-4 py-2 bg-light">
+        <div class="single-post-area mb-3">
+            <!-- post image thumbnail -->
+            <div class="post-thumbnail">
+                <img src="{% if post.image %}{{ post.image.url }}{% endif %}" alt="{{ post.title }}">
+            </div>
+
+            <!-- Post Content -->
+            <div class="post-content">
+                {% for cat in post.categories.all %}
+                    <a href="{{ cat.get_absolute_url }}" class="post-cata cata-sm cata-success">{{ cat.name|upper|safe }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                <a href="{{ post.get_absolute_url }}" class="post-title text-dark">
+                    {{ post.title|safe|truncatewords:5 }}
+                </a>
+                <div class="post-meta d-flex justify-content-between">
+                    <i class="fa fa-calendar-o mr-1" aria-hidden="true">
+                    {{ post.publish|date }}</i>
+                    <i class="fa fa-user-o mr-1" aria-hidden="true">
+                        {{ post.author|safe }}
+                    </i>
+                    <a><i class="fa fa-eye mr-1" aria-hidden="true"></i> {{ post.count }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

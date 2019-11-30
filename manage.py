@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
+
+__author__ = 'Flavien-hugs <contact@unsta.ci>'
+__version__= '0.0.1'
+__copyright__ = '© 2019 unsta'
+
+
 import os
 import sys
 

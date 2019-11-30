@@ -1,0 +1,9 @@
+<ul>
+    {%for month in month_list %}
+    <li>
+        <a href="{% url 'blog:month_archive' month|date:'Y' month|date:'m'|slugify %}">
+            {{ month|date:"F Y" }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
