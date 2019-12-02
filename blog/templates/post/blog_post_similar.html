@@ -1,27 +1,32 @@
 {% load static blog_tags i18n %}
 
 {% if similar_posts %}
-    <div class="section-heading">
-        <h6>Articles similaires</h6>
-    </div>
+    <div class="related-post-area mt-5">
+        <div class="section-heading style-2">
+            <h4 class="text-uppercase">articles similaires</h4>
+            <div class="line"></div>
+        </div>
 
-    <div class="row">
-        <!-- articles similaires -->
-        {% for post in similar_posts %}
-            <div class="col-12 col-md-4">
-                <div class="single-blog-post style-3 mb-3">
-                    <div class="post-data">
-                        {% for cat in post.categories.all %}
-                            <a class="post-catagory d-inline-block" href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">{{ cat.name }}</a>
-                            {% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                        <a href="{{ post.get_absolute_url }}" class="post-title">
-                            <h6>{{ post.title|truncatewords:6 }}</h6>
-                        </a>
+        <div class="row">
+            {% for post in similar_posts %}
+                <div class="col-12 col-md-6">
+                    <div class="single-post-area mb-3">
+                        <div class="post-content">
+                            {% for cat in post.categories.all %}
+                                <a class="post-cata cata-sm cata-success" href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">{{ cat.name|upper|safe }}</a>
+                            {% endfor %}
+                            <a href="{{ post.get_absolute_url }}" class="post-title small">
+                                {{ post.title|safe|title }}
+                            </a>
+                            <div class="post-meta d-flex">
+                                <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>{{ post.publish|date }}</a>
+                                <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>{{ post.author|safe }}</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-                {% empty %}
-        {% endfor %}
+            {% empty %}
+            {% endfor %}
+        </div>
     </div>
 {% endif %}

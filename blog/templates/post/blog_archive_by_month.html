@@ -1,3 +1,5 @@
+{% load static blog_tags i18n %}
+
 <ul>
     {%for month in month_list %}
     <li>
@@ -7,3 +9,40 @@
     </li>
     {% endfor %}
 </ul>
+
+<div class="single-widget">
+    <div class="section-heading style-2 mb-2">
+        <h4 class="text-success">temps fort</h4>
+        <div class="line"></div>
+    </div>
+
+    <!-- single blog post -->
+    {% for post in posts %}
+        <div class="single-post-area mb-2">
+            <!-- post content -->
+            <div class="post-content">
+                {% for cat in post.regions.all %}
+                    <a href="{{ cat.get_absolute_url|slugify }}" class="post-cata cata-sm cata-success">{{ cat.name|safe|upper }}</a>
+                    {% if forloop.last %} {% endif %}
+                {% endfor %}
+
+                {% for cat in post.categories.all %}
+                    <a href="{{ cat.get_absolute_url|slugify }}" class="post-cata cata-sm cata-success">{{ cat.name|safe|upper }}</a>
+                    {% if forloop.last %} {% endif %}
+                {% endfor %}
+
+                <a href="{{ post.get_absolute_url|slugify }}" class="post-title small text-dark">
+                    {{ post.title|safe }}
+                </a>
+
+                <div class="post-meta d-flex">
+                    <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>
+                    {{ post.publish|date }}</a>
+                    <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>
+                    {{ post.author|safe }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+

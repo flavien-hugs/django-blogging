@@ -1,0 +1,104 @@
+        {% extends "base.html" %}
+        {% load static blog_tags i18n %}
+
+        <!-- categorie listing -->
+        {% block hero_area %}
+            <!-- breadcrumb -->
+            {% include "_includes/breadcrumb.html" %}
+            <!-- ./breadcrumb -->
+
+        <!-- pagination -->
+        {% if is_paginated %}
+            <div class="vizew-pager-area">
+                <div class="vizew-pager-prev">
+                    {% if pagination.has_previous %}
+                        <p class="text-uppercase text-white">
+                            <a class="text-white" href="?page={{ pagination.previous_page_number }}">
+                                précédent
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+
+                {% if pagination.has_next %}
+                    <div class="vizew-pager-next">
+                        <p class="text-uppercase text-white">
+                            <a class="text-white" href="?page={{ pagination.next_page_number }}">
+                               suivant
+                            </a>
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}<!-- ./pagination -->
+
+            <section class="vizew-grid-posts-area mb-3">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <!-- post detail content -->
+                        <div class="col-12 col-lg-8">
+                            <div class="row">
+                                {% for post in posts %}
+                                    <div class="col-12 col-md-6">
+                                        <div class="single-post-area mb-50">
+                                            <div class="post-thumbnail">
+                                                <img src="{% if post.image %}
+                                                    {{ post.image.url }}{% endif %}" alt="{{ post.title }}">
+                                            </div>
+
+                                            <div class="post-content">
+                                                {% for cat in post.categories.all %}
+                                                    <a href="{{ cat.get_absolute_url }}" class="post-cata cata-sm cata-success">{{ cat.name|upper|safe }}</a>
+                                                {% endfor %}
+                                                <a href="{{ post.get_absolute_url }}" class="post-title">
+                                                    {{ post.title|safe }}
+                                                </a>
+                                                <div class="post-meta d-flex">
+                                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 22</a>
+                                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 16</a>
+                                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 15</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- pagination -->
+                            {% if is_paginated %}
+                                <nav class="mt-50">
+                                    <ul class="pagination justify-content-center">
+                                        {% if pagination.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ pagination.previous_page_number }}">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for page in paginator.page_range %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ forloop.counter }}">
+                                                    {{ forloop.counter }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+
+                                        {% if pagination.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ pagination.next_page_number }}">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif %}
+                        </div>
+
+                        <!-- sidebar widget -->
+                        {% include "_includes/post_sidebar.html" %}
+                    </div>
+                </div>
+            </section>
+        {% endblock hero_area %}

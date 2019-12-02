@@ -16,9 +16,9 @@
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 <a href="{{ post.get_absolute_url }}" class="post-title text-dark">
-                    {{ post.title|safe|truncatewords:5 }}
+                    {{ post.title|safe }}
                 </a>
-                <div class="post-meta d-flex justify-content-between">
+                <div class="post-meta d-flex justify-content-around">
                     <i class="fa fa-calendar-o mr-1" aria-hidden="true">
                     {{ post.publish|date }}</i>
                     <i class="fa fa-user-o mr-1" aria-hidden="true">

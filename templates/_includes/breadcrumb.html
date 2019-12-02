@@ -1,0 +1,33 @@
+        {% load static blog_tags i18n %}
+
+        <div class="vizew-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/" class="text-uppercase">
+                                        <i class="fa fa-home" aria-hidden="true"></i>
+                                        accueil
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    {% for cat in post.categories.all %}
+                                        <a href="{{ cat.get_absolute_url }}">
+                                            {{ cat.name|upper }}
+                                        </a>
+                                        {% if not forloop.last %}&smid; {% endif %}
+                                    {% endfor %}
+                                </li>
+                                {% if post.title %}
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        {{ post.title|truncatewords:10|safe }}
+                                    </li>
+                                {% endif %}
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>

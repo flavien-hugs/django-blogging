@@ -1,66 +1,81 @@
 {% extends "base.html" %}
-
 {% load static blog_tags i18n %}
-{% block featured_post_area %}
-    <div class="blog-area section-padding-0-80 mt-5">
+
+
+{% block hero_area %}
+    <!-- breadcrumb -->
+    {% include "_includes/breadcrumb.html" %}
+    <!-- ./breadcrumb -->
+
+    <section class="vizew-grid-posts-area mb-3">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
+                <!-- post detail content -->
                 {% if queryset %}
                     <div class="col-12 col-lg-8">
-                        <div class="blog-posts-area">
-                            <!-- Single Featured Post -->
-                            <h5>
-                                {% with queryset.count as total_results %}
-                                Nous avons trouvés {{ total_results }} résultat{{ total_results|pluralize }} pour vous.
-                                {% endwith %}
-                            </h5>
-
+                        <div class="row">
                             {% for post in queryset %}
-                                <div class="single-blog-post featured-post mb-5">
-                                    <div class="post-data">
-                                        {% for cat in post.categories.all %}
-                                        <a class="post-catagory d-inline-block" href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">{{ cat.name }}</a>
-                                        {% if not forloop.last %}, {% endif %}
-                                        {% endfor %}
+                                <div class="col-12 col-md-6">
+                                    <div class="single-post-area mb-50">
+                                        <div class="post-thumbnail">
+                                            <img src="{% if post.image %}
+                                            {{ post.image.url }}{% endif %}" alt="{{ post.title }}">
+                                        </div>
 
-                                        <a href="{{ post.get_absolute_url }}" title="{{ post.title }}" class="post-title">
-                                            <h6>{{ post.title|safe }}</h6>
-                                        </a>
-
-                                        <div class="post-meta">
-                                            <p class="post-author">Publié par {{ post.author }} à <a>{{ post.publish|date }}</a></p>
-                                            <p class="post-excerp">{{ post.body|safe|truncatewords:35 }}</p>
+                                        <div class="post-content">
+                                            {% for cat in post.categories.all %}
+                                            <a href="{{ cat.get_absolute_url }}" class="post-cata cata-sm cata-success">{{ cat.name|upper|safe }}</a>
+                                            {% endfor %}
+                                            <a href="{{ post.get_absolute_url }}" class="post-title">
+                                                {{ post.title|safe }}
+                                            </a>
+                                            <div class="post-meta d-flex">
+                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 22</a>
+                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 16</a>
+                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 15</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            {% empty %}
-                                <p>There are no results for your query.</p>
                             {% endfor %}
                         </div>
-                    </div>
 
-                    <div class="col-12 col-lg-4">
-                        <div class="blog-sidebar-area">
-                            <!-- Latest Posts Widget -->
-                            <div class="latest-posts-widget mb-50">
-                                <!-- Single Featured Post -->
-                                {% include "_includes/sidebar.html" %}
-                            </div>
+                        <!-- pagination -->
+                        {% if is_paginated %}
+                            <nav class="mt-50">
+                                <ul class="pagination justify-content-center">
+                                    {% if pagination.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ pagination.previous_page_number }}">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                    </li>
+                                    {% endif %}
 
-                            <!-- Newsletter Widget -->
-                            <div class="newsletter-widget mb-5">
-                                <h4>Newsletter</h4>
-                                <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                <form action="#" method="post">
-                                    <input type="text" name="text" placeholder="Name">
-                                    <input type="email" name="email" placeholder="Email">
-                                    <button type="submit" class="btn w-100">Subscribe</button>
-                                </form>
-                            </div>
-                        </div>
+                                    {% for page in paginator.page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ forloop.counter }}">
+                                            {{ forloop.counter }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+
+                                    {% if pagination.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ pagination.next_page_number }}">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}
                     </div>
                 {% endif %}
+
+                <!-- sidebar widget -->
+                {% include "_includes/post_sidebar.html" %}
             </div>
         </div>
-    </div>
-{% endblock featured_post_area %}
+    </section>
+{% endblock hero_area %}

@@ -71,7 +71,8 @@ class Post(models.Model):
     published = PublishedManager()
 
     def __str__(self):
-        return self.title
+        return "%s (%s)" % (
+            self.name, ", ".join(categorie.name for categorie in self.categories.all()),)
 
     class Meta:
         ordering = ('-publish',)
@@ -82,7 +83,7 @@ class Post(models.Model):
         good_date = timezone.localtime(self.publish)
         return reverse(
             'blog:post_detail',
-            args=[ self.publish.year, self.publish.month, self.publish.day, self.slug ]
+            args=[self.slug, self.publish.year, self.publish.month, self.publish.day]
         )
 
     def save(self):
@@ -100,6 +101,7 @@ class Post(models.Model):
         self.remove_image = False
         super(Post, self).save()
 
+    # liste des articles les plus vues
     @property
     def view_count(self):
         return PostView.objects.filter(post=self).count()

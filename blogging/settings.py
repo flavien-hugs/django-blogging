@@ -5,6 +5,17 @@ __version__= '0.0.1'
 __copyright__ = '© 2019 unsta'
 
 import os
+from django.core.exceptions import ImproperlyConfigured
+
+def get_env_variable(var_name, default_value=None):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        if default_value is None:
+            error_msg = "Set the {} environment variable".format(var_name)
+            raise ImproperlyConfigured(error_msg)
+        else:
+            return default_value
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,11 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bzb+n=o#gz#egg(lyof(##hq-+pbc(-s_4bh=gpt8!zjrhh&p4'
+SECRET_KEY = get_env_variable= ('SECRET_KEY', 'bzb+n=o#gz#egg(lyof(##hq-+pbc(-s_4bh=gpt8!zjrhh&p4')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 SITE_NAME = 'bcnews'
@@ -26,6 +36,7 @@ META_KEYWORDS = 'politique, economie, sport, business, technologies, Côte d\'Iv
 META_DESCRIPTION = 'Votre plateforme d\'informations continues et indépendantes sur l\'actualité Ivoirienne'
 
 DEFAULT_CHARSET = 'UTF-8'
+DEFAULT_CONTENT_TYPE = 'text/html'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -61,6 +72,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
 ]
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -107,6 +119,26 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
     'static/',
+]
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+# Custom template context processor setting
+TEMPLATE_CONTEXT_PROCESSORS = [
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    'django.core.context_processors.request',
 ]
 
 WSGI_APPLICATION = 'blogging.wsgi.application'

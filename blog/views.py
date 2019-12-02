@@ -1,5 +1,6 @@
-from django.db.models import Count, Q, F
 from django.core.mail import send_mail
+from django.db.models import Count, Q, F
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import (
     View, ListView, DetailView, DayArchiveView,
@@ -19,7 +20,7 @@ class SearchView(View):
         if query:
             queryset = queryset.filter(
                 Q(title__icontains=query) | Q(body__icontains=query) |
-                Q(categories__name__icontains=query)
+                Q(categories__name__icontains=query) | Q(regions__name__icontains=query)
             ).distinct()
 
         context = {'queryset': queryset}
@@ -29,11 +30,10 @@ class SearchView(View):
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        categorie = Categorie.objects.all()
-        object_list = Post.published.filter(categories__in=categorie)
+        object_list = Post.published.prefetch_related('categories')
         region = Regions.objects.filter()
 
-        context = {'posts': object_list, 'region': region, 'tag': categorie}
+        context = {'posts': object_list, 'region': region}
         template = 'post/blog_post_listing.html'
 
         return render(request, template, context)
@@ -41,25 +41,40 @@ class IndexView(View):
 def post_detail(request, year, month, day, post):
     page_title = post.title
     region = Regions.objects.all()
+    all_posts = Post.published.order_by('-publish')[:4]
     post = get_object_or_404(
         Post, slug=post, status='published', publish__year=year,
         publish__month=month, publish__day=day)
 
+    posts = Post.published.all()
+    paginator = Paginator(posts, 1)
+    page = request.GET.get('page')
+    try:
+        pagination = paginator.page(page)
+    except PageNotAnInteger:
+        pagination = paginator.page(1)
+    except EmptyPage:
+        pagination = paginator.page(paginator.num_pages)
+
+
+    # liste des articles les plus vues
+    counter = Post.published.filter(title__gt=F('counter'))
+
     # Liste des articles similaires
     post_tags_ids = post.categories.values_list('id', flat=True)
-    similar_posts = Post.published.filter(
+    similar_posts = Post.published.defer("image").filter(
         categories__in=post_tags_ids).exclude(id=post.id).annotate(
-        same_tags=Count('categories', distinct=True)
-        ).prefetch_related('categories').order_by('-same_tags', '-publish')[:4]
+        ).prefetch_related('categories').order_by('-publish')[:4]
 
     context = {
-        'region': region, 'post': post, 'page_title': page_title,
-        'similar_posts': similar_posts
+        'region': region, 'post': post, 'page_title': page_title, 'count': counter,
+        'similar_posts': similar_posts, 'posts': all_posts, 'pagination': pagination
     }
 
     template = 'post/blog_post_detail.html'
 
     return render(request, template, context)
+
 
 def post_share(request, post_id):
     post = get_object_or_404(Post, id=post_id, status='published')
@@ -82,11 +97,39 @@ def post_share(request, post_id):
     return render(request, template, context)
 
 
+class ListTag(ListView):
+    model = Categorie
+    context_object_name = 'posts'
+    template_name = 'post/blog_liste_categorie.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Post.published.all().order_by('-publish')
+
+    def get_context_data(self, **kwargs):
+        context = super(ListTag, self).get_context_data(**kwargs)
+        cat_listing = Categorie.objects.all()
+        paginator = Paginator(cat_listing, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            pagination = paginator.page(page)
+        except PageNotAnInteger:
+            pagination = paginator.page(1)
+        except EmptyPage:
+            pagination = paginator.page(paginator.num_pages)
+
+        context['page_title'] = 'catégories'
+        context['pagination'] = pagination
+
+        return context
+
+
 class ListByTag(ListView):
     "Liste des articles de même catégorie"
-
+    model = Categorie
     context_object_name = 'posts'
-    template_name = 'post/blog_categorie_liste.html'
+    template_name = 'post/blog_liste_by_categorie.html'
+    paginate_by = 10
 
     def get_queryset(self):
         self.cat = Categorie.objects.get(slug=self.kwargs['slug'])
@@ -94,7 +137,19 @@ class ListByTag(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListByTag, self).get_context_data(**kwargs)
+        cat_listing = Categorie.objects.all()
+        paginator = Paginator(cat_listing, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            pagination = paginator.page(page)
+        except PageNotAnInteger:
+            pagination = paginator.page(1)
+        except EmptyPage:
+            pagination = paginator.page(paginator.num_pages)
+
         context.update({'cat': self.cat})
+        context['pagination'] = pagination
+
         return context
 
 

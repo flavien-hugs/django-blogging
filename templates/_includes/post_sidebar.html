@@ -1,7 +1,41 @@
 {% load i18n static blog_tags  %}
-{# sidebar #}
+
 <div class="col-12 col-md-5 col-lg-4">
     <div class="sidebar-area">
+        <!-- widget actualite dans nos régions -->
+        <div class="single-widget latest-video-widget">
+            <div class="section-heading style-2 mb-2">
+                <h4 class="text-success">à la une</h4>
+                <div class="line"></div>
+            </div>
+
+            <!-- single blog post -->
+            {% for post in posts %}
+                <div class="single-post-area mb-2">
+                    <!-- post content -->
+                    <div class="post-content">
+                        {% for cat in post.regions.all %}
+                            <a href="{{ cat.get_absolute_url }}" class="post-cata cata-sm cata-success">{{ cat.name|safe|upper }}</a>
+                            {% if forloop.last %} {% endif %}
+                        {% endfor %}
+                        {% for cat in post.categories.all %}
+                            <a href="{{ cat.get_absolute_url }}" class="post-cata cata-sm cata-success">{{ cat.name|safe|upper }}</a>
+                            {% if forloop.last %} {% endif %}
+                        {% endfor %}
+
+                        <div class="post-meta d-flex">
+                            <a><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>
+                            {{ post.publish|date }}</a>
+                            <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>
+                            {{ post.author|safe }}</a>
+                        </div>
+                        <a href="{{ post.get_absolute_url }}" class="post-title small text-muted">{{ post.title|safe }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
         <!-- widget timeline : actualité en continue -->
         <div class="single-widget">
             <div class="section-heading style-2 mb-1">
@@ -13,44 +47,18 @@
                 <div class="content">
                     <ul class="timeline">
                         {% for post in posts %}
-                            <li class="timeline-item bg-gray rounded-0 ml-2 p-2 shadow-none">
-                                <div class="timeline-arrow"></div>
-                                <span class="small">
-                                    <i class="fa fa-clock-o mr-1"></i>
-                                    {{ post.publish|date }}
-                                </span>
-                                <h6 class="text-muted text-small h6 font-weight-bold mb-0"><a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title|safe }}</a></h6>
-                            </li>
+                        <li class="timeline-item bg-gray rounded-0 ml-2 p-2 shadow-none">
+                            <div class="timeline-arrow"></div>
+                            <span class="small">
+                                <i class="fa fa-clock-o mr-1"></i>
+                                {{ post.publish|date }}
+                            </span>
+                            <h6 class="text-muted text-small h6 font-weight-bold mb-0"><a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title|safe }}</a></h6>
+                        </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
-        </div>
-
-        <!-- widget derniers articles publiés -->
-        <div class="single-widget latest-video-widget">
-            <div class="section-heading style-2 mb-2">
-                <h4 class="text-success">
-                    <i class="fa fa-clock-o mr-2"></i>en semmaine</h4>
-                <div class="line"></div>
-            </div>
-
-            {% for post in posts %}
-                <!-- single blog post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-content">
-                        <a href="{{ post.get_absolute_url }}" class="post-title text-muted">
-                            {{ post.title|safe }}
-                        </a>
-                        <div class="post-meta d-flex">
-                            <a class="mr-2"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
-                            {{ post.publish|date }}</a>
-                            <a><i class="fa fa-user-o mr-1" aria-hidden="true"></i>
-                            {{ post.author|safe }}</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
         </div>
 
         <!-- widget actualite dans nos régions -->
@@ -92,10 +100,6 @@
                 </div>
             {% endfor %}
         </div>
-
-        <!-- widget archives du mois -->
-        {% include "post/blog_archive_by_month.html" %}
-
 
         <!-- widget newsletter-->
         <div class="single-widget newsletter-widget">

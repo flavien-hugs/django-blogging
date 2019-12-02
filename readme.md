@@ -1,5 +1,7 @@
 # [django-blogging](https://github.com/flavien-hugs/django-blogging)
-un simple moteur de blog fait avec le framework Django
+Site d'information de l'agence Brother's Consulting basé à Bouaké.
+
+![django-blogging](https://github.com/flavien-hugs/django-blogging/blob/master/bcnews.png "screenshot description")
 
 ![[django-blogging](https://github.com/flavien-hugs/django-blogging/)](https://img.shields.io/badge/unsta-live--demo-orange.svg?style=flat)
 ![The MIT License](http://img.shields.io/badge/License-MIT-green.svg?style=flat)
