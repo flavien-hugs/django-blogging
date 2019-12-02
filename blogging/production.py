@@ -19,4 +19,4 @@ INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
 #  Add configuration for static files storage using whitenoise
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://bnewsc.herokuapp.com/']
