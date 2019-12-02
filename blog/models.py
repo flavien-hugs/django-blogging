@@ -72,7 +72,7 @@ class Post(models.Model):
 
     def __str__(self):
         return "%s (%s)" % (
-            self.name, ", ".join(categorie.name for categorie in self.categories.all()),)
+            self.title, ", ".join(categorie.name for categorie in self.categories.all()),)
 
     class Meta:
         ordering = ('-publish',)
